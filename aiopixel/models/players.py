@@ -57,37 +57,32 @@ class PixelAchievements:
 
     def __init__(self):
         loop = asyncio.get_event_loop()
-        future = asyncio.Future()
-        asyncio.ensure_future(self.get_all_achievements(future))
-        loop.run_until_complete(future)
-        self.achievements = future.result()["achievements"]
+        loop.create_task(self.get_all_achievements())
+        self.achievements = None
 
-    @staticmethod
-    async def get_all_achievements(future):
+    async def get_all_achievements(self):
         async with aiohttp.ClientSession() as session:
             async with session.get(RAW_ACHIEVEMENTS_URL) as r:
                 if r.status == 200:
                     try:
                         data = json.loads(await r.text())
                     except aiohttp.ClientResponseError as e:
-                        future.set_exception(e)
+                        pass
                     else:
-                        future.set_result(data)
-                else:
-                    future.set_exception(
-                        RuntimeError(
-                            "Something went wrong getting all achievements"
-                        )
-                    )
+                        self.achievements = data["achievements"]
 
     def get_one_time_achievement(self, name: str):
         game, achievement_name = name.split("_", 1)
+        if not achievement_name.upper() in self.achievements[game]["one_time"]:
+            return None
         raw_achievement = \
             self.achievements[game]["one_time"][achievement_name.upper()]
         return OneTimeAchievement((game, achievement_name, raw_achievement))
 
     def get_tiered_achievement(self, name: str, player_value: int):
         game, achievement_name = name.split("_", 1)
+        if not achievement_name.upper() in self.achievements[game]["tiered"]:
+            return None
         raw_achv = self.achievements[game]["tiered"][achievement_name.upper()]
         return TieredAchievement(
             (game, achievement_name, raw_achv, player_value)

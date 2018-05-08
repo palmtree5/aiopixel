@@ -19,7 +19,7 @@ async def get_player_uuid(name: str, session=None):
     }
     r_data = [name]
     url = "https://api.mojang.com/profiles/minecraft"
-    async with session.post(url, data=r_data, headers=headers) as r:
+    async with session.post(url, json=r_data, headers=headers) as r:
         data = await r.json()
     if data:
         return data[0]["id"]

@@ -164,7 +164,7 @@ class PixelClient:
         if not bool(data["player"]):
             raise PlayerNotFound()
         player_data = data["player"]
-        player_rank = PlayerRank(player_data)
+        player_rank = PlayerRank.from_player_data(player_data)
         player_achievements = PlayerAchievements(player_data, self._achievements)
         most_recent_game_type = getattr(GameType, player_data["mostRecentGameType"])
         player_stats = []

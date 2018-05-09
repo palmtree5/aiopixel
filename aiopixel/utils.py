@@ -4,7 +4,7 @@ import aiohttp
 
 
 async def get_player_name(uuid: str, session=None):
-    session = aiohttp.ClientSession if session is None else session
+    session = aiohttp.ClientSession() if session is None else session
     url = "https://api.mojang.com/user/profiles/{}/names".format(clean_uuid(uuid))
 
     async with session.get(url) as r:
@@ -13,7 +13,7 @@ async def get_player_name(uuid: str, session=None):
 
 
 async def get_player_uuid(name: str, session=None):
-    session = aiohttp.ClientSession if session is None else session
+    session = aiohttp.ClientSession() if session is None else session
     headers = {
         "Content-Type": "application/json"
     }

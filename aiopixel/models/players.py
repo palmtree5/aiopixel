@@ -12,6 +12,11 @@ RAW_ACHIEVEMENTS_URL = \
     "https://raw.githubusercontent.com/HypixelDev" \
     "/PublicAPI/master/Documentation/misc/Achievements.json"
 
+__all__ = [
+    "OneTimeAchievement", "TieredAchievement", "AchievementTier",
+    "PixelAchievements", "PlayerAchievements", "PlayerRank", "Player"
+]
+
 
 class OneTimeAchievement:
     def __init__(self, data: tuple):

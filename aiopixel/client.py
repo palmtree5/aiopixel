@@ -17,9 +17,13 @@ from .utils import clean_uuid, get_player_uuid
 
 BASE_API_URL = "https://api.hypixel.net{}"
 
+__all__ = ["PixelClient"]
+
 
 class PixelClient:
-
+    """
+    Asynchronus client for accessing Hypixel's API
+    """
     def __init__(self, api_key: str):
         self._api_key = api_key
         self._session = aiohttp.ClientSession()

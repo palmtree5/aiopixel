@@ -1,5 +1,15 @@
 from ..gametypes import GameType
 
+__all__ = [
+    "PlayerStats", "QuakeStats", "WallsStats", "PaintballStats",
+    "HungerGamesStats", "TNTGamesStats", "VampireZStats", 
+    "Walls3Stats", "ArcadeStats", "ArenaStats", "UHCStats", 
+    "MCGOStats", "BattlegroundStats", "SuperSmashStats", 
+    "GingerBreadStats", "HousingStats", "SkyWarsStats", 
+    "TrueCombatStats", "SpeedUHCStats", "SkyClashStats", 
+    "LegacyStats", "PrototypeStats", "BedwarsStats", 
+    "MurderMysteryStats", "BuildBattleStats", "DuelsStats"
+]
 
 class PlayerStats:
     def __init__(self, data: dict):

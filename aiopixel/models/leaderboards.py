@@ -2,6 +2,8 @@ from typing import List
 from ..utils import get_player_name
 from ..gametypes import GameType
 
+__all__ = ["Leaderboard", "LeaderboardMember"]
+
 
 class LeaderboardMember:
     def __init__(self, uuid: str):

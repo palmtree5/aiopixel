@@ -139,6 +139,14 @@ class BedwarsStats(PlayerStats):
         super().__init__(data)
 
     def level(self) -> float:
+        """
+        Calculate the player's Bedwars level
+
+        Returns
+        -------
+        float:
+            The player's Bedwars level
+        """
         exp_per_prestige = 489000
         levels_per_prestige = 100
 

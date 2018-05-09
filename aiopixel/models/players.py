@@ -93,7 +93,6 @@ class PlayerAchievements:
 
     def __init__(self, data, all_achievements: PixelAchievements):
         self.all_achievements = all_achievements
-        total_points = 0
         one_time = []
         tiered = []
         if "achievementsOneTime" in data:
@@ -111,6 +110,9 @@ class PlayerAchievements:
 
 
 class PlayerRank(Enum):
+    """
+    An enum representing player ranks
+    """
     ADMIN = "Admin"
     MODERATOR = "Moderator"
     HELPER = "Helper"
@@ -129,6 +131,9 @@ class PlayerRank(Enum):
 
     @classmethod
     def from_player_data(cls, data: dict):
+        """
+        Gets the player's rank from their player data
+        """
         if "rank" in data:
             return getattr(cls, data["rank"])
         elif data.get("buildTeam") is True:
@@ -162,6 +167,14 @@ class Player:
         self.most_recent_game_type = most_recent_game_type
 
     def network_level(self) -> float:
+        """
+        Calculate the player's network level
+
+        Returns
+        -------
+        float
+            The player's network level
+        """
         base = 10000
         growth = 2500
 
@@ -175,4 +188,7 @@ class Player:
             )
     
     def online(self) -> bool:
+        """
+        Show whether the player is online or not
+        """
         return self.last_logout < self.last_login

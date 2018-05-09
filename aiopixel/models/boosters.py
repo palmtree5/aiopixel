@@ -26,4 +26,7 @@ class Booster:
                "length={0.length} game_type={0.game_type.id}>".format(self)
 
     async def purchaser_name(self):
+        """
+        Get the purchaser's name
+        """
         return await get_player_name(self.purchaser_uuid)

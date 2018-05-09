@@ -17,7 +17,13 @@ class Friend:
                "receiver_uuid={0.receiver_uuid}>".format(self)
 
     async def sender_name(self):
+        """
+        Get the username of the player who sent the friend request
+        """
         return await get_player_name(self.sender_uuid)
 
     async def receiver_name(self):
+        """
+        Get the username of the player who received the friend request
+        """
         return await get_player_name(self.receiver_uuid)

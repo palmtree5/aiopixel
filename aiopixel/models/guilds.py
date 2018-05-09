@@ -25,25 +25,40 @@ class BannerPattern:
 
 
 class GuildMember:
-
+    """
+    A guild member
+    """
+    
     def __init__(self, member: dict):
         self.uuid = member["uuid"]
         self.rank = member["rank"]
         self.joined = datetime.utcfromtimestamp(member["joined"]/1000)
 
     async def name(self):
+        """
+        Gets the current username for this guild member
+
+        Returns
+        -------
+        str
+           The guild member's username
+        """
         return await get_player_name(self.uuid)
 
 
 class GuildTag:
-
+    """
+    A guild tag
+    """
     def __init__(self, name: str, color: str):
         self.name = name
         self.color = color
 
 
 class Guild:
-
+    """
+    A guild
+    """
     def __init__(self, _id: str, bank_size_level: int, can_motd: bool,
                  can_party: bool, can_tag: bool, coins: int, coins_ever: int,
                  created: int, joinable: bool, member_size_level: int,

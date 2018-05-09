@@ -8,6 +8,9 @@ class LeaderboardMember:
         self.uuid = uuid
 
     async def name(self):
+        """
+        Get the username of a leaderboard member
+        """
         return await get_player_name(self.uuid)
 
 

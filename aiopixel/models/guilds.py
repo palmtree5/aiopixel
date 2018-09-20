@@ -1,9 +1,41 @@
 from datetime import datetime
 from typing import List
+from enum import Enum
 
 from ..utils import get_player_name
 
-__all__ = ["Guild", "GuildBanner", "GuildMember", "GuildTag"]
+__all__ = ["Guild", "GuildBanner", "GuildMember", "GuildPermissions", "GuildRank", "GuildTag"]
+
+class GuildPermissions(Enum):
+    """An enum of guild permissions"""
+    # Format:
+    # Some name         ID   Name                    Description
+    MODIFY_GUILD_NAME = (0,  "Modify Guild Name",    "Change the guild's name.")
+    MODIFY_GUILD_MOTD = (1,  "Modify Guild MOTD",    "Change the guild's message of the day.")
+    MODIFY_GUILD_TAG  = (2,  "Modify Guild Tag",     "Change the guild's tag.")
+    MANAGE_RANKS      = (3,  "Change Ranks",         "Promote or demote members (up to their own rank).")
+    CHANGE_VISIBILITY = (4,  "Guild Finder options", "Change how the guild is shown in the Guild Finder, if at all.")
+    OFFICER_CHAT      = (5,  "Officer Chat",         "Send and receive messages in the officer chat.")
+    KICK_MEMBERS      = (6,  "Kick Members",         "Kick members from the guild.")
+    MUTE_MEMBERS      = (7,  "Mute Members",         "Mute guild members.")
+    INVITE_MEMBERS    = (8,  "Invite Members",       "Invite members to the guild.")
+    VIEW_AUDIT_LOG    = (9,  "View Audit Log",       "View the audit log.")
+    VIEW_STATS        = (10, "View Stats",           "View a guild member's stats.")
+    START_PARTY       = (11, "Guild Party",          "Start a guild party")
+    CHANGE_SETTINGS   = (12, "Guild Settings",       "Change the guild settings.")
+    CHANGE_DISCORD    = (13, "Change Guild Discord", "Change the guild's Discord join link.")
+
+    def __init__(self, _id, _name, _description):
+        self.id = _id
+        self.name = _name
+        self.description = _description
+    
+    @classmethod
+    def from_id(cls, _id: int):
+        for _, data in cls.__members__.items():
+            if _id == data.id:
+                return data
+        return None
 
 
 class GuildBanner:
@@ -22,6 +54,16 @@ class BannerPattern:
     def __init__(self, pattern, color):
         self.pattern = pattern
         self.color = color
+
+
+class GuildRank:
+    def __init__(self, rank: dict):
+        self.name = rank["name"]
+        self.permissions = [GuildPermissions.from_id(p) for p in rank["permissions"]]
+        self.default = rank["default"]
+        self.tag = rank["tag"]
+        self.created = datetime.utcfromtimestamp(rank["created"]/1000)
+        self.priority = rank["priority"]
 
 
 class GuildMember:

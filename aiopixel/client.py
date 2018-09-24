@@ -2,16 +2,17 @@ from typing import List
 
 import aiohttp
 
-from .exceptions import InvalidKeyException, PixelException, GuildNotFound, \
-    PlayerNotInGuild, PlayerNotFound, NoSessionForPlayer
+from .exceptions import (GuildNotFound, InvalidKeyException,
+                         NoSessionForPlayer, PixelException, PlayerNotFound,
+                         PlayerNotInGuild)
 from .gametypes import GameType
+from .models import stats
 from .models.boosters import Booster
 from .models.friends import Friend
-from .models.guilds import Guild, GuildBanner, GuildMember, GuildTag
+from .models.guilds import Guild, GuildBanner, GuildMember, GuildTag, GuildRank
 from .models.leaderboards import Leaderboard, LeaderboardMember
-from .models.players import Player, PlayerAchievements, \
-    PlayerRank, PixelAchievements
-from .models import stats
+from .models.players import (PixelAchievements, Player, PlayerAchievements,
+                             PlayerRank)
 from .models.sessions import PlayerSession
 from .utils import clean_uuid, get_player_uuid
 
@@ -219,21 +220,25 @@ class PixelClient:
             members.append(GuildMember(m))
 
         tag = GuildTag(guild.get("tag", None), guild.get("tagColor", None))
-        guild_can_motd = guild.get("canMotd", False)
-        guild_can_party = guild.get("canParty", False)
-        guild_can_tag = guild.get("canTag", False)
         guild_joinable = guild.get("joinable", False)
         vip_count = guild.get("vipCount", 0)
         mvp_count = guild.get("mvpCount", 0)
+        discord = guild.get("discord", None)
+        description = guild.get("description", None)
+        ranks = guild.get("ranks", None)
+        if ranks:
+            ranks = [GuildRank(r) for r in ranks]
+        preferred_games = guild.get("preferredGames", None)
+        if preferred_games:
+            preferred_games = [getattr(GameType, game) for game in preferred_games]
         banner = GuildBanner(
             guild["banner"]["Base"], guild["banner"]["Patterns"]
         )
         return Guild(
-            guild["_id"], guild["bankSizeLevel"], guild_can_motd,
-            guild_can_party, guild_can_tag, guild["coins"],
-            guild["coinsEver"], guild["created"], guild_joinable,
-            guild["memberSizeLevel"], members, guild["name"], tag,
-            banner, vip_count, mvp_count
+            guild["_id"], guild["created"], guild["exp"], discord, guild_joinable,
+            description, members, guild["name"], tag,
+            banner, vip_count, mvp_count, ranks, preferred_games, guild.get("chatThrottle", 0),
+            guild.get("publiclyListed", False), guild.get("chatMute", 0)
         )
 
     async def leaderboards(self) -> List[Leaderboard]:
@@ -386,5 +391,3 @@ class PixelClient:
             raise NoSessionForPlayer()
         else:
             return PlayerSession(data["session"])
-
-

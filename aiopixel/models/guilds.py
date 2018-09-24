@@ -3,6 +3,7 @@ from typing import List
 from enum import Enum
 
 from ..utils import get_player_name
+from ..gametypes import GameType
 
 __all__ = ["Guild", "GuildBanner", "GuildMember", "GuildPermissions", "GuildRank", "GuildTag"]
 
@@ -25,10 +26,10 @@ class GuildPermissions(Enum):
     CHANGE_SETTINGS   = (12, "Guild Settings",       "Change the guild settings.")
     CHANGE_DISCORD    = (13, "Change Guild Discord", "Change the guild's Discord join link.")
 
-    def __init__(self, _id, _name, _description):
+    def __init__(self, _id: int, name: str, description: str):
         self.id = _id
-        self.name = _name
-        self.description = _description
+        self.perm_name = name
+        self.description = description
     
     @classmethod
     def from_id(cls, _id: int):
@@ -101,24 +102,25 @@ class Guild:
     """
     A guild
     """
-    def __init__(self, _id: str, bank_size_level: int, can_motd: bool,
-                 can_party: bool, can_tag: bool, coins: int, coins_ever: int,
-                 created: int, joinable: bool, member_size_level: int,
-                 members: List[GuildMember], name: str, tag: GuildTag,
-                 banner: GuildBanner, vip_count: int, mvp_count: int):
+    def __init__(self, _id: str, created: int, exp: int, discord: str, joinable: bool,
+                 description: str, members: List[GuildMember], name: str, tag: GuildTag,
+                 banner: GuildBanner, vip_count: int, mvp_count: int, ranks: List[GuildRank],
+                 preferred_games: List[GameType], chat_throttle: int, is_listed: bool,
+                 chat_muted_until: datetime):
         self._id = _id
-        self.bank_size_level = bank_size_level
-        self.can_motd = can_motd
-        self.can_party = can_party
-        self.can_tag = can_tag
-        self.coins = coins
-        self.coins_ever = coins_ever
         self.created = datetime.utcfromtimestamp(created/1000)
+        self.exp = exp
+        self.discord = discord
         self.joinable = joinable
-        self.member_size_level = member_size_level
+        self.description = description
         self.members = members
         self.name = name
         self.tag = tag
         self.banner = banner
         self.vip_count = vip_count
         self.mvp_count = mvp_count
+        self.ranks = ranks
+        self.preferred_games = preferred_games
+        self.chat_throttle = chat_throttle
+        self.is_listed = is_listed
+        self.chat_muted_until = chat_muted_until

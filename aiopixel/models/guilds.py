@@ -5,10 +5,10 @@ from enum import Enum
 from ..utils import get_player_name
 from ..gametypes import GameType
 
-__all__ = ["Guild", "GuildBanner", "GuildMember", "GuildPermissions", "GuildRank", "GuildTag"]
+__all__ = ["Guild", "GuildMember", "GuildRank", "GuildTag"]
 
+"""
 class GuildPermissions(Enum):
-    """An enum of guild permissions"""
     # Format:
     # Some name         ID   Name                    Description
     MODIFY_GUILD_NAME = (0,  "Modify Guild Name",    "Change the guild's name.")
@@ -56,11 +56,12 @@ class BannerPattern:
         self.pattern = pattern
         self.color = color
 
+"""
 
 class GuildRank:
     def __init__(self, rank: dict):
         self.name = rank["name"]
-        self.permissions = [GuildPermissions.from_id(p) for p in rank["permissions"]]
+        # self.permissions = [GuildPermissions.from_id(p) for p in rank["permissions"]]
         self.default = rank["default"]
         self.tag = rank["tag"]
         self.created = datetime.utcfromtimestamp(rank["created"]/1000)
@@ -116,7 +117,7 @@ class Guild:
         self.members = members
         self.name = name
         self.tag = tag
-        self.banner = banner
+        # self.banner = banner
         self.vip_count = vip_count
         self.mvp_count = mvp_count
         self.ranks = ranks

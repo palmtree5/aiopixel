@@ -9,7 +9,7 @@ from .gametypes import GameType
 from .models import stats
 from .models.boosters import Booster
 from .models.friends import Friend
-from .models.guilds import Guild, GuildBanner, GuildMember, GuildTag, GuildRank
+from .models.guilds import Guild, GuildMember, GuildTag, GuildRank
 from .models.leaderboards import Leaderboard, LeaderboardMember
 from .models.players import (PixelAchievements, Player, PlayerAchievements,
                              PlayerRank)
@@ -231,9 +231,9 @@ class PixelClient:
         preferred_games = guild.get("preferredGames", None)
         if preferred_games:
             preferred_games = [getattr(GameType, game) for game in preferred_games]
-        banner = GuildBanner(
-            guild["banner"]["Base"], guild["banner"]["Patterns"]
-        )
+        # banner = GuildBanner(
+        #     guild["banner"]["Base"], guild["banner"]["Patterns"]
+        # )
         return Guild(
             guild["_id"], guild["created"], guild["exp"], discord, guild_joinable,
             description, members, guild["name"], tag,

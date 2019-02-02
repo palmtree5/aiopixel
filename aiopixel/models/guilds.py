@@ -105,7 +105,7 @@ class Guild:
     """
     def __init__(self, _id: str, created: int, exp: int, discord: str, joinable: bool,
                  description: str, members: List[GuildMember], name: str, tag: GuildTag,
-                 banner: GuildBanner, vip_count: int, mvp_count: int, ranks: List[GuildRank],
+                 vip_count: int, mvp_count: int, ranks: List[GuildRank],
                  preferred_games: List[GameType], chat_throttle: int, is_listed: bool,
                  chat_muted_until: datetime):
         self._id = _id

@@ -237,7 +237,7 @@ class PixelClient:
         return Guild(
             guild["_id"], guild["created"], guild["exp"], discord, guild_joinable,
             description, members, guild["name"], tag,
-            banner, vip_count, mvp_count, ranks, preferred_games, guild.get("chatThrottle", 0),
+            vip_count, mvp_count, ranks, preferred_games, guild.get("chatThrottle", 0),
             guild.get("publiclyListed", False), guild.get("chatMute", 0)
         )
 

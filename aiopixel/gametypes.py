@@ -36,6 +36,7 @@ class GameType(Enum):
     MURDER_MYSTERY = (59, "MurderMystery", "Murder Mystery")
     BUILD_BATTLE   = (60, "BuildBattle",   "Build Battle")
     DUELS          = (61, "Duels",         "Duels")
+    SKYBLOCK       = (None, None, None)
 
     def __init__(self, _id: int, db_name: str, name: str):
         self.id = _id

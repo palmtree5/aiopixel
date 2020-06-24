@@ -3,7 +3,7 @@ from typing import List
 import aiohttp
 
 from .exceptions import (GuildNotFound, InvalidKeyException,
-                         NoSessionForPlayer, PixelException, PlayerNotFound,
+                         NoStatusForPlayer, PixelException, PlayerNotFound,
                          PlayerNotInGuild)
 from .gametypes import GameType
 from .models import stats
@@ -13,7 +13,7 @@ from .models.guilds import Guild, GuildMember, GuildTag, GuildRank
 from .models.leaderboards import Leaderboard, LeaderboardMember
 from .models.players import (PixelAchievements, Player, PlayerAchievements,
                              PlayerRank)
-from .models.sessions import PlayerSession
+from .models.sessions import PlayerStatus
 from .utils import clean_uuid, get_player_uuid
 
 BASE_API_URL = "https://api.hypixel.net{}"
@@ -357,19 +357,19 @@ class PixelClient:
             player_stats, most_recent_game_type
         )
     
-    async def session(self, uuid: str) -> PlayerSession:
+    async def status(self, uuid: str) -> PlayerStatus:
         """
-        Get a player's current session
+        Get a player's current status
 
         Parameters
         ----------
         uuid: str
-            The player to get a session for
+            The player to get the status of
         
         Returns
         -------
-        PlayerSession
-            The player's current session
+        PlayerStatus
+            The player's current status
         
         Raises
         ------
@@ -379,15 +379,15 @@ class PixelClient:
         PixelException
             If an error occurs while making the request or is present in the response json
         
-        NoSessionForPlayer
-            If the specified player does not have a session
+        NoStatusForPlayer
+            If the specified player is offline or has this endpoint disabled via in-game settings
         """
         data = await self._request(
-            "/session", "GET", 
+            "/status", "GET", 
             params={"key": self._api_key, "uuid": uuid}
         )
 
-        if not data["session"]:
-            raise NoSessionForPlayer()
+        if "session" in data and not data["session"]["online"]:
+            raise NoStatusForPlayer()
         else:
-            return PlayerSession(data["session"])
+            return PlayerStatus(data["session"])

@@ -18,5 +18,5 @@ class PlayerNotFound(PixelException):
     pass
 
 
-class NoSessionForPlayer(PixelException):
+class NoStatusForPlayer(PixelException):
     pass

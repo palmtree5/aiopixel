@@ -206,3 +206,9 @@ class SkyBlockStats(PlayerStats):
     def __init__(self, data: dict):
         self.game = GameType.SKYBLOCK
         super().__init__(data)
+
+
+class PitStats(PlayerStats):
+    def __init__(self, data: dict):
+        self.game = GameType.PIT
+        super().__init__(data)

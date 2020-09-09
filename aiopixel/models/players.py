@@ -8,9 +8,7 @@ import aiohttp
 
 from ..gametypes import GameType
 
-RAW_ACHIEVEMENTS_URL = \
-    "https://raw.githubusercontent.com/HypixelDev" \
-    "/PublicAPI/master/Documentation/misc/Achievements.json"
+RAW_ACHIEVEMENTS_URL = "https://api.hypixel.net/resources/achievements"
 
 __all__ = [
     "OneTimeAchievement", "TieredAchievement", "AchievementTier",

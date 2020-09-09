@@ -200,3 +200,9 @@ class DuelsStats(PlayerStats):
     def __init__(self, data: dict):
         self.game = GameType.DUELS
         super().__init__(data)
+
+
+class SkyBlockStats(PlayerStats):
+    def __init__(self, data: dict):
+        self.game = GameType.SKYBLOCK
+        super().__init__(data)

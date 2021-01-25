@@ -1,5 +1,6 @@
 from enum import Enum
 from datetime import datetime
+from contextlib import suppress
 import math
 import asyncio
 import json
@@ -76,6 +77,8 @@ class PixelAchievements:
 
     def get_one_time_achievement(self, name: str):
         game, achievement_name = name.split("_", 1)
+        if game not in self.achievements:
+            return None
         if not achievement_name.upper() in self.achievements[game]["one_time"]:
             return None
         raw_achievement = \
@@ -84,6 +87,8 @@ class PixelAchievements:
 
     def get_tiered_achievement(self, name: str, player_value: int):
         game, achievement_name = name.split("_", 1)
+        if game not in self.achievements:
+            return None
         if not achievement_name.upper() in self.achievements[game]["tiered"]:
             return None
         raw_achv = self.achievements[game]["tiered"][achievement_name.upper()]

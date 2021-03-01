@@ -10,7 +10,7 @@ def get_requirements():
 
 setup(
     name="aiopixel",
-    version="0.2.8",
+    version="0.2.12",
     packages=find_packages(include=["aiopixel", "aiopixel.*"]),
     license="GPLv3",
     install_requires=get_requirements(),

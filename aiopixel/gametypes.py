@@ -38,6 +38,8 @@ class GameType(Enum):
     DUELS          = (61, "Duels",         "Duels")
     SKYBLOCK       = (63, "SkyBlock",      "SkyBlock")
     PIT            = (64, "Pit",           "Pit")
+    REPLAY         = (65, "Replay",        "Replay")
+    SMP            = (67, "SMP",           "SMP")
 
     def __init__(self, _id: int, db_name: str, name: str):
         self.id = _id

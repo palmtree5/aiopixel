@@ -3,4 +3,4 @@ from .client import PixelClient
 
 
 def __version__():
-    return "0.2.13"
+    return "0.2.14"
